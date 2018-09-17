@@ -2,17 +2,24 @@
 <html>
 <head>
   <title><%= title %></title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <% include  ./partials/header %>
 </head>
-
 <body>
-  <h1>
-    <%= title %>
-  </h1>
-  <p>Welcome to<%= title %></p>
-  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <video id="localVideo" autoplay></video>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-primary" id="startVideo">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <% include ./partials/footer %>
   <script src="/javascripts/socket.io.js"></script>
-  <script src="/javascripts/script.js"></script>
 </body>
 
 </html>
