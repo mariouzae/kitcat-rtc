@@ -7,7 +7,6 @@
 var app = require('../app');
 var debug = require('debug')('kitcat-rtc:server');
 var http = require('http');
-var io = require('socket.io')(http);
 
 /**
  * Get port from environment and store in Express.
@@ -29,6 +28,7 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+var io = require('socket.io')(server);
 
 /** web socket routes */
 io.on('connection', function (socket) {

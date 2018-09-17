@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>
-    <%= title %>
-  </title>
+  <title><%= title %></title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
@@ -12,13 +9,10 @@
   <h1>
     <%= title %>
   </h1>
-  <p>Welcome to
-    <%= title %>
-  </p>
+  <p>Welcome to<%= title %></p>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="/javascripts/socket.io.js"></script>
-  <script>
-    var socket = io();
-  </script>
+  <script src="/javascripts/script.js"></script>
 </body>
 
 </html>
