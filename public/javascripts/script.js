@@ -1,9 +1,17 @@
 $(function () {
-    const socket = io('http://localhost:3000/');
+    // get query string param
+    var urlParams = new URLSearchParams(location.search);
+    var username = urlParams.get('username'); 
+
+    const socket = io('http://localhost:3000?username=' + username);
     const localVideo = document.querySelector('#localVideo');
     const startVideo = document.querySelector('#startVideo');
     var localMediaStream = null;
     var peerConnection = null;
+
+    socket.on('offer', function(data){
+        console.log("Received: ", data);
+    })
 
     startVideo.addEventListener('click', () => {
         getLocalMedia();
@@ -11,7 +19,7 @@ $(function () {
 
     function getLocalMedia() {
         const contraints = {
-            video: false,
+            video: true,
             audio: true
         };
         navigator.mediaDevices.getUserMedia(contraints)
@@ -44,7 +52,13 @@ $(function () {
             return peerConnection.setLocalDescription(offer);
         }).then(function () {
             console.log(peerConnection.localDescription.sdp);
-            socket.emit('message', peerConnection.localDescription);
+            var user = {
+                name : 'mariouzae',
+                type : 'offer',
+                target : 'milenetvargas',
+                sdp : peerConnection.localDescription
+            };
+            socket.emit('message', user);
         });
     }
 });

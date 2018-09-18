@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title><%= title %></title>
-  <% include  ./partials/header %>
+    <title>Login</title>
+    <% include ./partials/header %>
 </head>
+
 <body>
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-12">
-        <video id="localVideo" autoplay></video>
-      </div>
+    <div class="container">
+        <div class="row text-center">
+            <div class="form-group col-md-12">
+                <form action="/chat" method="GET">
+                    <h1>Kitcat-rtc</h1>
+                    <input type="text" id="username" name="username" placeholder="username...">
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="row text-center">
-      <div class="col-md-12">
-        <button type="button" class="btn btn-primary" id="startVideo">Start</button>
-      </div>
-    </div>
-  </div>
-
-  <% include ./partials/footer %>
-  <script src="/javascripts/socket.io.js"></script>
+    <% include ./partials/footer %>
 </body>
-
 </html>
