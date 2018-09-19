@@ -9,9 +9,19 @@ $(function () {
     var localMediaStream = null;
     var peerConnection = null;
 
-    socket.on('offer', function(data){
-        console.log("Received: ", data);
-    })
+    socket.on('offer', (offer) => {
+        console.log("SDP Offer received: ", offer.sdp);
+        handleVideoOfferMsg(offer);
+    });
+
+    socket.on('answer', (answer) => {
+        console.log("SDP Answer received: ", answer.sdp);
+        //handleVideoOfferMsg(offer);
+    });
+
+    socket.on('new-ice-candidate', (ice) => {
+        console.log("New ice candidate received: ", ice);
+    });
 
     startVideo.addEventListener('click', () => {
         getLocalMedia();
@@ -43,12 +53,15 @@ $(function () {
                 }
             ]
         });
-        peerConnection.onnegotiationneeded = handleNegotiationNeededEvent;
+        //peerConnection.onnegotiationneeded = handleNegotiationNeededEvent;
+        peerConnection.onicecandidate = handleICECandidateEvent;
     };
 
     function handleNegotiationNeededEvent() {
         console.log("create offer");
-        peerConnection.createOffer().then(function (offer) {
+        /** Create an offer and send to the another peer */
+        peerConnection.createOffer()
+        .then((offer) => {
             return peerConnection.setLocalDescription(offer);
         }).then(function () {
             console.log(peerConnection.localDescription.sdp);
@@ -60,5 +73,47 @@ $(function () {
             };
             socket.emit('message', user);
         });
+    };
+
+    function handleVideoOfferMsg(offer) {
+        console.log("Generating answer...");
+        var localStream = null;
+        const caller = offer.name;
+
+        createPeerConnection();
+
+        var rtcDescription = new RTCSessionDescription(offer.sdp);
+
+        peerConnection.setRemoteDescription(rtcDescription).then(() => {
+            return navigator.mediaDevices.getUserMedia(contraints);
+        }).then((stream) => {
+            localStream = stream;
+            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+        }).then(() => {
+            return peerConnection.createAnswer();
+        }).then((answer) => {
+            return peerConnection.setLocalDescription(answer);
+        }).then(() => {
+            var user = {
+                name : 'milenetvargas',
+                type : 'answer',
+                target : 'mariouzae',
+                sdp : peerConnection.localDescription
+            };
+            socket.emit('message', user);
+        }).catch();
+    }
+
+    function handleICECandidateEvent(ice) {
+        console.log("Send ICE Candidate");
+        // if(ice.candidate){
+        //     var user = {
+        //         name : 'mariouzae',
+        //         type : 'new-ice-candidate',
+        //         target : 'milenetvargas',
+        //         sdp : peerConnection.localDescription
+        //     };
+        //     socket.emit('message', user);
+        // }
     }
 });
