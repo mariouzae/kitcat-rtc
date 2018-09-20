@@ -39,7 +39,7 @@ module.exports = (io) => {
           break;
 
         case "new-ice-candidate":
-          var ice = new ICE(data.type, data.name, data.target, data.candidate);
+          var ice = new ICE(data.type, data.target, data.candidate);
           var socketUser = getUser(ice);
           if (socketUser) {
             socketUser.emit('new-ice-candidate', ice);
@@ -47,7 +47,6 @@ module.exports = (io) => {
           break;
 
         default:
-
       }
     });
 

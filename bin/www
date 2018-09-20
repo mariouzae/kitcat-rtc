@@ -6,7 +6,16 @@
 
 var app = require('../app');
 var debug = require('debug')('kitcat-rtc:server');
-var http = require('http');
+var http = require('https');
+var fs = require('fs');
+
+/**
+ * SSL Cert
+ */
+var options = {
+  key: fs.readFileSync('./bin/ssl/server-key.pem'),
+  cert: fs.readFileSync('./bin/ssl/server-cert.pem')
+};
 
 /**
  * Get port from environment and store in Express.
@@ -19,7 +28,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.
