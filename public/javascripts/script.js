@@ -48,12 +48,11 @@ $(function () {
     function gotLocalMediaStream(mediaStream) {
         localVideo.srcObject = mediaStream;
         localMediaStream = mediaStream;
-        //listLocalDevice(localMediaStream);
-        createPeerConnection();
+        createPeerConnection()
         localMediaStream.getTracks().forEach(track => peerConnection.addTrack(track, mediaStream));
         handleNegotiationNeededEvent();
     };
-
+        
     function createPeerConnection() {
         console.log("Creating an peerConnection");
         peerConnection = new RTCPeerConnection({
