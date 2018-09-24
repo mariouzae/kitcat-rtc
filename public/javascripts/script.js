@@ -4,9 +4,9 @@ $(function () {
     var username = urlParams.get('username');
     var targetUsername = 'milenetvargas';
 
-    const socket = io('https://kitcat-rtc.io:3000?username=' + username);
+    const socket = io('https://192.168.1.189:3000?username=' + username);
     const localVideo = document.querySelector('#localVideo');
-    const startVideo = document.querySelector('#startVideo');
+    const startAudio = document.querySelector('#startAudio');
     const contraints = {
         video: true,
         audio: true
@@ -35,14 +35,17 @@ $(function () {
         .then(console.log("ICE Candidate added...")).catch();
     });
 
-    startVideo.addEventListener('click', () => {
+    startAudio.addEventListener('click', () => {
         getLocalMedia();
     });
 
-    function getLocalMedia() {
-        navigator.mediaDevices.getUserMedia(contraints)
-            .then(gotLocalMediaStream)
-            .catch();
+    async function getLocalMedia() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia(contraints);
+            gotLocalMediaStream(stream);
+        } catch (err) {
+            getUserMediaError(err);
+        }
     };
 
     function gotLocalMediaStream(mediaStream) {
@@ -54,9 +57,9 @@ $(function () {
     };
         
     function createPeerConnection() {
-        console.log("Creating an peerConnection");
+        console.log("Creating peerConnection.");
         peerConnection = new RTCPeerConnection({
-            iceServers: [     // Information about ICE servers - Use your own!
+            iceServers: [  
                 {
                     urls: "stun:stun.stunprotocol.org"
                 }
@@ -132,4 +135,15 @@ $(function () {
             socket.emit('message', ice);
         }
     }
+
+    function getUserMediaError(err)
+    {
+        if (err.name === 'NotAllowedError') {
+            console.log("User don't allow to access camera.");
+        } else if (err.name === 'NotFoundError') {
+            console.log("Camera not found.");
+        } else {
+            console.log("Fatal error to get devices.");
+        }
+    };
 });

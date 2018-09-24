@@ -14,7 +14,7 @@ module.exports = (io) => {
 
     // show current logged users
     users.forEach(e => {
-      console.log("User: ", e.username);
+      console.log("User, ", e.username + " connected");
     });
 
     /**
@@ -51,6 +51,7 @@ module.exports = (io) => {
     });
 
     socket.on('disconnect', function () {
+      console.log("User, ", socket.username + " disconnected");
       // remove user from global list
       users.forEach((element, index) => {
         if (socket.username === element.username) {

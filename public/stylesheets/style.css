@@ -1,6 +1,6 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 a {
@@ -10,3 +10,64 @@ a {
 video {
   background-color: black;
 }
+
+#frame {
+  height: 100vh;
+}
+
+.side-user {
+  background: #2c3e50;
+  color: #f5f5f5;
+}
+
+#side-msg {
+  background: #f5f5f5;
+  padding: 0;
+}
+
+#side-msg-header {
+  line-height: 75px;
+  font-size: 1.2em;
+  background: #dfe6e9;
+  
+}
+
+#side-msg-wrapper {
+  background-color: #dfe6e9;
+}
+
+#side-msg-input {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: red;
+  z-index: 99;
+}
+
+#side-msg-input .wrap {
+  position: relative;
+  color: #dfe6e9;
+}
+
+.wrap input {
+  border: none;
+  font-size: 1.1em;
+  width: calc(100% - 60px);
+  line-height: 41px;
+}
+
+.wrap button {
+  float: right;
+  border: none;
+  width: 60px;
+  padding: 13px 0;
+  outline: none;
+  cursor: pointer;
+  background: #FF9900;
+  color: #f5f5f5;
+}
+
+.wrap button i {
+  margin-right: 15px;
+}
+

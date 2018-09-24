@@ -1,21 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
   <% include  ./partials/header %>
 </head>
+
 <body>
-  <div class="container">
-    <div class="row text-center">
+  <div class="container-fluid p-0">
+    <!-- <div class="row text-center">
       <div class="col-md-12">
         <video id="localVideo" autoplay></video>
       </div>
     </div>
     <div class="row text-center">
       <div class="col-md-12">
-        <button type="button" class="btn btn-primary" id="startVideo">Start</button>
+        <button type="button" class="btn btn-primary" id="startAudio">Start Audio only</button>
+        <button type="button" class="btn btn-primary" id="startVideo">Start Audio and Video</button>
+      </div>
+    </div> -->
+
+    <div class="row" id="frame">
+      <div class="col-3 side-user">
+        Users
+      </div>
+      <div class="col-9" id="side-msg">
+        <div id="side-msg-header">
+          Mario Uzae
+        </div>
+        <div id="side-msg-content">
+          Content
+        </div>
+        <div id="side-msg-input">
+          <div class="wrap">
+            <input type="text">
+            <button>
+                <i aria-hidden="true" class="fa fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+
+  </div>
   </div>
 
   <% include ./partials/footer %>
